@@ -7,7 +7,9 @@ import com.gargoylesoftware.htmlunit.html.*;
 import javax.xml.bind.ValidationException;
 import java.net.MalformedURLException;
 import java.util.List;
-
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import com.google.gson.Gson;
 /**
  * Created by les on 04/04/14.
  *
@@ -18,19 +20,29 @@ import java.util.List;
  * Fill inputType inputValue inputIdentifier
  * Submit inputID
  * Result iapiid
+ * ResultJSON iapiid
  *
  * open http://localhost:8080/web_war_exploded/formExample.jsp;
+ * form 1;
+ * fill text pippo username;
+ * fill password pluto password;
+ * submit btnSubmit;
+ * result 1;
  * form 1;
  * fill text mirko username;
  * fill password morandi password;
  * submit btnSubmit;
  * result 1;
+ * resultJSON 1;
  *
  * add control for instructions order (open before everything)
  * rendere null il form quando cambio pagina
  */
 public class Interpreter {
 
+    private Logger _logger;
+    private Gson _resultJson;
+    private ResultJSON _json;
     private List<String> _commands;
     private WebClient _webClient;
     private HtmlForm  _actualForm;
@@ -39,14 +51,20 @@ public class Interpreter {
 
     public Interpreter(String program){
         _commands = null;
+        _logger = Logger.getLogger(Interpreter.class.getName());
         try
         {
             _commands = Validator.validateSource(program);
-            //set_creationFailed(false);
+            set_creationFailed(false);
+            _json = new ResultJSON();
+            _resultJson = new Gson();
+
+            _logger.log(Level.INFO,"creation successful");
+
         }
         catch (ValidationException ex)
         {
-            System.out.println("Invalid source, check syntax");
+            _logger.log(Level.SEVERE, "Invalid source, check syntax");
             set_creationFailed(true);
         }
 
@@ -57,6 +75,8 @@ public class Interpreter {
         {
             _commands = Validator.validateSource(program, del);
             set_creationFailed(false);
+            _json = new ResultJSON();
+            _resultJson = new Gson();
         }
         catch (ValidationException ex)
         {
@@ -68,6 +88,8 @@ public class Interpreter {
     public String compile() throws ValidationException{
 
         String executionResult = "";
+        Result toJson = new Result();
+
         for (int i = 0; i < _commands.size();i++)
         {
             String toDo = Validator.retrieveCommand(_commands.get(i));
@@ -84,6 +106,7 @@ public class Interpreter {
                     break;
                 case FORM:
                     form(Validator.getSecondParameter(_commands.get(i)));
+                    toJson.setPage(_webPage.getUrl().toString());
                     break;
                 case FILL:
                     final int fill_parameters = 4;
@@ -95,10 +118,19 @@ public class Interpreter {
                     submit(Validator.getSecondParameter(_commands.get(i)));
                     break;
                 case RESULT:
-                    executionResult = result(Validator.getSecondParameter(_commands.get(i)));
+                    String id = Validator.getSecondParameter(_commands.get(i));
+                    executionResult = result(id);
+                    toJson.setiAPIid(id);
+                    toJson.setResult(executionResult);
+                    _json.get_results().add(toJson);
+                    toJson = new Result();
+                    break;
+                case RESULTJSON:
+                    executionResult = _resultJson.toJson(_json);
+                    //implement something
                     break;
                 default:
-                    System.out.println("Command not supported");
+                    _logger.log(Level.SEVERE, "Command not supported");
 
             }
         }
@@ -120,11 +152,11 @@ public class Interpreter {
         }
         catch (MalformedURLException ex)
         {
-            System.out.println("Error while parsing url in open function");
+            _logger.log(Level.SEVERE, "Error while parsing url in open function");
         }
         catch (Exception ex)
         {
-            System.out.println("Error in open:\n"+ex.getMessage());
+            _logger.log(Level.SEVERE, "Error in open:\n" + ex.getMessage());
         }
         return success;
     }
@@ -258,7 +290,7 @@ public class Interpreter {
         try
         {
             HtmlDivision divResult = (HtmlDivision) _webPage.getByXPath(String.format(".//div[@id = \"%s\"]",iapiID)).get(0);
-            result = divResult.asXml();
+            result = divResult.asText();
 
         }
         catch (IndexOutOfBoundsException ex)

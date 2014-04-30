@@ -7,17 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by les on 15/04/14.
  */
 public class CompilerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Logger logger= Logger.getLogger(getClass().getName());
+
         String text = (String) request.getParameter("program");
         String del =  (String) request.getParameter("delimiter");
-
         Interpreter interpreter;
         String result = "";
+        logger.log(Level.SEVERE, "Starting");
 
         if(del.equals(""))
             interpreter = new Interpreter(text);
@@ -34,7 +38,7 @@ public class CompilerServlet extends HttpServlet {
             }
             catch (Exception ex)
             {
-                System.out.println(ex.getMessage());
+                logger.log(Level.SEVERE, ex.getMessage());
             }
         }
 

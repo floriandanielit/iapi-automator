@@ -8,5 +8,6 @@ public enum CommandType {
     FORM,
     FILL,
     SUBMIT,
-    RESULT
+    RESULT,
+    RESULTJSON
 }
