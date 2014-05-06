@@ -15,7 +15,7 @@
 <body>
 
 
-<div class="iapi" id="${sessionScope.id}">
+<div class="iapi result" id="${sessionScope.id}">
     <c:out value="${sessionScope.result}" />
 </div>
 </body>
