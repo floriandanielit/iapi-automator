@@ -80,7 +80,8 @@ public class Interpreter {
         }
         catch (ValidationException ex)
         {
-            System.out.println("Invalid source, check syntax");
+            _logger.log(Level.SEVERE, "Invalid source, check syntax");
+
             set_creationFailed(true);
         }
 
@@ -176,12 +177,12 @@ public class Interpreter {
         }
         catch (Exception ex)
         {
-            System.out.println(String.format("Error while trying to find form with ID %s/n %s",iapiID,ex.getMessage()));
+            _logger.log(Level.SEVERE,String.format("Error while trying to find form with ID %s/n %s",iapiID,ex.getMessage()));
         }
         return success;
     }
 
-    public boolean fill(String inputType, String inputValue, String inputID){
+    public boolean fill(String inputTypeIAPI, String inputValue, String inputID){
         if(_actualForm == null)
             return false;
 
@@ -189,6 +190,7 @@ public class Interpreter {
 
         try
         {
+            String inputType = getInputType(inputTypeIAPI);
             InputType type = InputType.valueOf(inputType.toUpperCase());
 
             switch (type)
@@ -244,7 +246,7 @@ public class Interpreter {
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+            _logger.log(Level.SEVERE, "Error in fill:\n" + ex.getMessage());
         }
         return success;
 
@@ -270,11 +272,13 @@ public class Interpreter {
         }
         catch (IndexOutOfBoundsException ex)
         {
-            System.out.println(String.format("Unable to find sumbit element with ID = %s",inputID));
+            _logger.log(Level.SEVERE,String.format("Unable to find sumbit element with ID = %s",inputID));
+
         }
         catch (Exception ex)
         {
-            System.out.println("Exception while submittind:\n"+ex.getMessage());
+            _logger.log(Level.SEVERE, "Error in submit:\n" + ex.getMessage());
+
         }
 
         return success;
@@ -295,16 +299,25 @@ public class Interpreter {
         }
         catch (IndexOutOfBoundsException ex)
         {
-            System.out.println(String.format("Unable to find sumbit element with ID = %s",iapiID));
+            _logger.log(Level.SEVERE,String.format("Unable to find element with ID = %s",iapiID));
+
         }
         catch (Exception ex)
         {
-            System.out.println("Exception while submittind:\n"+ex.getMessage());
+            _logger.log(Level.SEVERE,"Exception while searching result:\n"+ex.getMessage());
         }
 
         return result;
     }
+    private String getInputType(String iapiNotatedType)
+    {
+        String[] parts = iapiNotatedType.split(":");
 
+        assert parts.length > 1;
+
+        return parts[1];
+
+    }
     public boolean is_creationFailed() {
         return _creationFailed;
     }

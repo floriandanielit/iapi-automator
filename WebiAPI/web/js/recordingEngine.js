@@ -5,6 +5,7 @@ var instructions = new Array();
 var forms = new Array(); //this array is used to prevent multiple additions of a form in the language due to the high frequency of the mouseenter event triggering.
 var divs = new Array(); //same as before
 var actualIstruction;
+var isProgramEmpty;
 
 function startRecorder() {
 
@@ -13,8 +14,9 @@ function startRecorder() {
     $("#iapistoprecoridng").removeAttr("disabled");
     $("#iapistartrecoridng").attr("disabled","disabled");
 
-
-    instructions.push(new Istruction("open", document.baseURI));
+    //this fixes multiple open in the language
+    if(localStorage.getItem("program") == null)
+        instructions.push(new Istruction("open", document.baseURI));
 
     $("form.iapi").each(function(index, item){
         var  current = this;

@@ -43,8 +43,8 @@ public class CompilerServlet extends HttpServlet {
         }
 
         request.getSession().setAttribute("result",result);
-        request.getSession().setAttribute("id",1);
-        response.sendRedirect("result.jsp");
+
+        response.sendRedirect("test.jsp");
 
     }
 
