@@ -33,7 +33,7 @@ import com.google.gson.Gson;
  * fill password morandi password;
  * submit btnSubmit;
  * result 1;
- * resultJSON 1;
+ * resultJSON 1(not needed);
  *
  * add control for instructions order (open before everything)
  * rendere null il form quando cambio pagina

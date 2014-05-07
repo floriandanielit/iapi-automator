@@ -46,7 +46,7 @@ public class Validator {
     }
     public static boolean isValidCommand(String command)
     {
-        Pattern pattern = Pattern.compile("(((form|submit|result|resultJSON)[ ]\\S+)|((open)[ ](ht|f)tp(s?)://\\S+)|((fill)[ ](\\S+)[ ](\\S+)[ ](\\S+)))");
+        Pattern pattern = Pattern.compile("(((form|submit|result)[ ]\\S+)|((open)[ ](ht|f)tp(s?)://\\S+)|((fill)[ ](\\S+)[ ](\\S+)[ ](\\S+))|resultJSON)");
         boolean matched = false;
 
         try {

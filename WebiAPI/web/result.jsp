@@ -10,10 +10,18 @@
 
 <html>
 <head>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/istruction.js"></script>
+    <script src="js/recordingEngine.js"></script>
+
     <title></title>
 </head>
 <body>
-
+<script>
+    $(function(){
+        startRecorder();
+    })
+</script>
 
 <div class="iapi result" id="${sessionScope.id}">
     <c:out value="${sessionScope.result}" />
