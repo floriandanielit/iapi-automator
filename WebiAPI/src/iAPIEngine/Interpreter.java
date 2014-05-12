@@ -22,21 +22,13 @@ import com.google.gson.Gson;
  * Result iapiid
  * ResultJSON iapiid
  *
- * open http://localhost:8080/web_war_exploded/formExample.jsp;
- * form 1;
- * fill text pippo username;
- * fill password pluto password;
- * submit btnSubmit;
- * result 1;
- * form 1;
- * fill text mirko username;
- * fill password morandi password;
- * submit btnSubmit;
- * result 1;
- * resultJSON 1(not needed);
+ open http://localhost:8080/web_war_exploded/formExample.jsp;form 1;fill inputType:Text mirko username;
+ fill inputType:Password morandi password;submit btnSubmit;result 1;form 3;fill inputType:Text ciao name;fill inputType:Text comohestas residence;submit btn;result 1;resultJSON;
  *
  * add control for instructions order (open before everything)
  * rendere null il form quando cambio pagina
+ *
+ *
  */
 public class Interpreter {
 

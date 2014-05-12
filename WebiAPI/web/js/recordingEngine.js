@@ -7,6 +7,10 @@ var divs = new Array(); //same as before
 var actualIstruction;
 var isProgramEmpty;
 
+
+function sanitizeInput(input){
+    return '~'+input;
+}
 function startRecorder() {
 
     localStorage.setItem("isRecording", "yes");
@@ -71,12 +75,12 @@ function startRecorder() {
     }
     function handleMouseEnter(item){
 
-        actualIstruction = new Istruction("fill",getIAPIclass($(item).attr('class')));
+        actualIstruction = new Istruction("fill", sanitizeInput(getIAPIclass($(item).attr('class'))));
     }
     function handleMouseLeave(item){
 
-        actualIstruction.parametersList.push(item.value);
-        actualIstruction.parametersList.push(item.id);
+        actualIstruction.parametersList.push(sanitizeInput(item.value));
+        actualIstruction.parametersList.push(sanitizeInput(item.id));
         instructions.push(actualIstruction);
 
     }

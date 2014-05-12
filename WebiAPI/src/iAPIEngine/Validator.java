@@ -46,7 +46,7 @@ public class Validator {
     }
     public static boolean isValidCommand(String command)
     {
-        Pattern pattern = Pattern.compile("(((form|submit|result)[ ]\\S+)|((open)[ ](ht|f)tp(s?)://\\S+)|((fill)[ ](\\S+)[ ](\\S+)[ ](\\S+))|resultJSON)");
+        Pattern pattern = Pattern.compile("(((form|submit|result)[ ]\\S+)|((open)[ ](ht|f)tp(s?)://\\S+)|((fill)([ ](\\S+))*)|resultJSON)");
         boolean matched = false;
 
         try {
@@ -78,7 +78,7 @@ public class Validator {
     }
     public static List<String> getParameters(String code, int numberOfParameters)
     {
-        List<String> commands = new ArrayList<String>(Arrays.asList(code.split(" ")));
+        List<String> commands = new ArrayList<String>(Arrays.asList(code.split(" ~")));
 
         assert numberOfParameters <= commands.size();
 
@@ -87,4 +87,5 @@ public class Validator {
         else
             return null;
     }
+
 }
