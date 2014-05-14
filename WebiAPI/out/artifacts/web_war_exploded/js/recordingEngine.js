@@ -27,8 +27,10 @@ function startRecorder() {
         $(item).mouseenter(function(){
 
             if(forms[current.id] == undefined){
-                forms[current.id] = 1;
-                instructions.push(new Istruction("form", current.id));
+                if(confirm("You have selected form with id: "+current.id+". Save it?")){
+                    forms[current.id] = 1;
+                    instructions.push(new Istruction("form", current.id));
+                }
             }
         });
     });
@@ -38,10 +40,10 @@ function startRecorder() {
         var  current = this;
         $(item).mouseenter(function(){
             if(divs[current.id] == undefined){
-                console.log("added result for "+current.id);
-
-                divs[current.id] = 1;
-                instructions.push(new Istruction("result", current.id));
+                if(confirm("You have selected div with id: "+current.id+". Save it?")){
+                    divs[current.id] = 1;
+                    instructions.push(new Istruction("result", current.id));
+                }
             }
         });
     });
@@ -79,7 +81,12 @@ function startRecorder() {
     }
     function handleMouseLeave(item){
 
-        actualIstruction.parametersList.push(sanitizeInput(item.value));
+        //if(confirm("Do you want this field to be dynamic?")){
+          //  actualIstruction.parametersList.push("$dynamic$");
+        //}
+        //else
+            actualIstruction.parametersList.push(sanitizeInput(item.value));
+
         actualIstruction.parametersList.push(sanitizeInput(item.id));
         instructions.push(actualIstruction);
 
