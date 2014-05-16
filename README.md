@@ -13,14 +13,6 @@ All software of the project is **free and open-source**, as specified by the ter
 of the [BSD license](https://github.com/floriandanielit/iapi-automator/blob/master/LICENSE.txt).
 
 
-iAPI reference specification
-----------
-The implementation of this service is based on [iAPI HTML annotation format]
-(http://www.w3.org/community/interative-apis/wiki/Main_Page). The specification is developed and 
-maintained by the [W3C Interactive APIs Community Group](http://www.w3.org/community/interative-apis/).
-The Group is open, participation is free, and contributions are welcome from everyone.
-
-
 Features and requirements
 ---------
 
@@ -38,6 +30,14 @@ Features and requirements
 * Java-enabled web server
 
 
+iAPI reference specification
+----------
+The implementation of this service is based on [iAPI HTML annotation format]
+(http://www.w3.org/community/interative-apis/wiki/Main_Page). The specification is developed and 
+maintained by the [W3C Interactive APIs Community Group](http://www.w3.org/community/interative-apis/).
+The Group is open, participation is free, and contributions are welcome from everyone.
+
+
 Contributing to this project
 -------------
 
@@ -51,9 +51,3 @@ Here some useful links to understand how Git works:
 * [GitHub Guides](https://guides.github.com/)
 * [Git Tutorials](https://www.atlassian.com/git)
 * [Git Cheatsheet](http://ndpsoftware.com/git-cheatsheet.html#loc=local_repo;)
-
-
-Installation and usage of the engine
-----------------
-
-tbd
