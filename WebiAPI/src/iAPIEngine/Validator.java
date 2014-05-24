@@ -83,7 +83,7 @@ public class Validator {
         assert numberOfParameters <= commands.size();
 
         if(commands.size() >= 2)
-            return commands.subList(1, numberOfParameters);
+            return commands.subList(1, Math.min(numberOfParameters, commands.size()));
         else
             return null;
     }

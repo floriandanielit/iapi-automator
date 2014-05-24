@@ -77,7 +77,7 @@ function startRecorder() {
     }
     function handleMouseEnter(item){
 
-        actualIstruction = new Istruction("fill", sanitizeInput(getIAPIclass($(item).attr('class'))));
+       // actualIstruction = new Istruction("fill", sanitizeInput(getIAPIclass($(item).attr('class'))));
     }
     function handleMouseLeave(item){
 
@@ -85,8 +85,8 @@ function startRecorder() {
           //  actualIstruction.parametersList.push("$dynamic$");
         //}
         //else
-            actualIstruction.parametersList.push(sanitizeInput(item.value));
-
+        actualIstruction = new Istruction("fill",sanitizeInput(item.value) );
+        //actualIstruction.parametersList.push(sanitizeInput(item.value));
         actualIstruction.parametersList.push(sanitizeInput(item.id));
         instructions.push(actualIstruction);
 

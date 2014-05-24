@@ -19,9 +19,9 @@
 
 </script>
 <form class="iapi" id="1" method="post" action="Login">
-    <input class="inputType:Text" type="text" id="username" name="username"/>
-    <input class="inputType:Password" type="password" id="password" name="password" />
-    <input class="inputType:Submit" type="submit" id="btnSubmit" value="submit">
+    <input class="text:username" type="text" id="username" name="username"/>
+    <input class="password:password" type="password" id="password" name="password" />
+    <input class="submit" type="submit" id="btnSubmit" value="submit">
 </form>
 
 </body>

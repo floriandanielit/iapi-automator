@@ -23,10 +23,10 @@
 </div>
 <br />
 <form class="iapi" id="3" method="post" action="Register">
-    <input class="inputType:Text" type="text" id="name" name="realName"/>
-    <input class="inputType:Text" type="text" id="residence" name="home" />
-    <input class="inputType:Checkbox" type="checkbox" id="single" name="single" />
-    <input class="inputType:Submit" type="submit" id="btn" value="submit">
+    <input class="text:realName" type="text" id="name" name="realName"/>
+    <input class="text:home" type="text" id="residence" name="home" />
+    <input class="checkbox:single" type="checkbox" id="single" name="single" />
+    <input class="submit" type="submit" id="btn" value="submit">
 </form>
 </body>
 </html>

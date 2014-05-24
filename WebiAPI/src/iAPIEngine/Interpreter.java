@@ -6,6 +6,8 @@ import com.gargoylesoftware.htmlunit.html.*;
 
 import javax.xml.bind.ValidationException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -40,6 +42,7 @@ public class Interpreter {
     private HtmlForm  _actualForm;
     private HtmlPage  _webPage;
     private boolean   _creationFailed;
+    private List<String> _supportedInputs;
 
     public Interpreter(String program){
         _commands = null;
@@ -50,7 +53,7 @@ public class Interpreter {
             set_creationFailed(false);
             _json = new ResultJSON();
             _resultJson = new Gson();
-
+            _supportedInputs = new ArrayList<String>(Arrays.asList("text:","password:","reset:","image:","file:","checkbox:","radiobutton:","button:","image:","hidden:","submit"));
             _logger.log(Level.INFO,"creation successful");
 
         }
@@ -69,6 +72,8 @@ public class Interpreter {
             set_creationFailed(false);
             _json = new ResultJSON();
             _resultJson = new Gson();
+            _supportedInputs = new ArrayList<String>(Arrays.asList("text:","password:","reset:","image:","file:","checkbox:","radiobutton:","button:","image:","hidden:","submit"));
+
         }
         catch (ValidationException ex)
         {
@@ -104,8 +109,11 @@ public class Interpreter {
                 case FILL:
                     final int fill_parameters = 4;
                     List<String> parameters = Validator.getParameters(_commands.get(i), fill_parameters);
-                    assert parameters.size() == fill_parameters;
-                    fill(parameters.get(0),parameters.get(1),parameters.get(2));
+
+                    if(parameters.size() <= fill_parameters)
+                        fill(parameters.get(0), parameters.get(1));
+                    else
+                        fill(parameters.get(0),parameters.get(1),parameters.get(2));
                     break;
                 case SUBMIT:
                     submit(Validator.getSecondParameter(_commands.get(i)));
@@ -121,6 +129,7 @@ public class Interpreter {
                 case RESULTJSON:
                     executionResult = _resultJson.toJson(_json);
                     //implement something
+                    //no it's ok
                     break;
                 default:
                     _logger.log(Level.SEVERE, "Command not supported");
@@ -173,7 +182,12 @@ public class Interpreter {
         }
         return success;
     }
+    public boolean fill(String inputValue, String inputID){
 
+        String var = getInputType(inputID);
+        return fill(var, inputValue, inputID);
+
+    }
     public boolean fill(String inputTypeIAPI, String inputValue, String inputID){
         if(_actualForm == null)
             return false;
@@ -182,7 +196,7 @@ public class Interpreter {
 
         try
         {
-            String inputType = getInputType(inputTypeIAPI);
+            String inputType = getInputTypeFromNotation(inputTypeIAPI);
             InputType type = InputType.valueOf(inputType.toUpperCase());
 
             switch (type)
@@ -301,13 +315,27 @@ public class Interpreter {
 
         return result;
     }
-    private String getInputType(String iapiNotatedType)
+    private String getInputTypeFromNotation(String iapiNotatedType)
     {
+        String[] results = iapiNotatedType.split(" ");
+        String notation = null;
+
+        for(String element: results){
+            if(_supportedInputs.contains(element))
+                notation = element;
+        }
         String[] parts = iapiNotatedType.split(":");
 
         assert parts.length > 1;
 
-        return parts[1];
+        return parts[0];
+
+    }
+
+    private String getInputType(String iapiID ){
+
+        DomAttr result = (DomAttr) _actualForm.getByXPath(String.format(".//input[@id = \"%s\"]/@class",iapiID)).get(0);
+        return  result.getNodeValue();
 
     }
     public boolean is_creationFailed() {
