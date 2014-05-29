@@ -87,5 +87,19 @@ public class Validator {
         else
             return null;
     }
+    public static boolean hasRetrieveParameter(String input){
+
+        Pattern pattern = Pattern.compile("\\(@retrieve[ ]\\S+\\)");
+        boolean matched = false;
+
+        try {
+            Matcher matcher = pattern.matcher(input);
+            matched = matcher.matches();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return matched;
+    }
 
 }

@@ -18,10 +18,10 @@
 
 
 </script>
-<form class="iapi" id="1" method="post" action="Login">
-    <input class="text:username" type="text" id="username" name="username"/>
-    <input class="password:password" type="password" id="password" name="password" />
-    <input class="submit" type="submit" id="btnSubmit" value="submit">
+<form class="h-iapi e-form:login" id="1" method="post" action="Login">
+    <input class="i-text:username" type="text" id="username" name="username"/>
+    <input class="i-password:password" type="password" id="password" name="password" />
+    <input class="i-submit" type="submit" id="btnSubmit" value="submit">
 </form>
 
 </body>

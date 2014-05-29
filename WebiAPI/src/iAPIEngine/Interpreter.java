@@ -107,13 +107,16 @@ public class Interpreter {
                     toJson.setPage(_webPage.getUrl().toString());
                     break;
                 case FILL:
-                    final int fill_parameters = 4;
+                    final int fill_parameters = 3;
                     List<String> parameters = Validator.getParameters(_commands.get(i), fill_parameters);
 
-                    if(parameters.size() <= fill_parameters)
-                        fill(parameters.get(0), parameters.get(1));
-                    else
-                        fill(parameters.get(0),parameters.get(1),parameters.get(2));
+                    if(Validator.hasRetrieveParameter(parameters.get(0))){
+                        String retrievedParamer = retrieveParameterFromResult(parameters.get(0));
+                        parameters.set(0, retrievedParamer != null?retrievedParamer:parameters.get(0));
+                    }
+
+                    fill(parameters.get(0), parameters.get(1));
+
                     break;
                 case SUBMIT:
                     submit(Validator.getSecondParameter(_commands.get(i)));
@@ -123,13 +126,12 @@ public class Interpreter {
                     executionResult = result(id);
                     toJson.setiAPIid(id);
                     toJson.setResult(executionResult);
+                    toJson.setLabel(getResultLabel(id));
                     _json.get_results().add(toJson);
                     toJson = new Result();
                     break;
                 case RESULTJSON:
                     executionResult = _resultJson.toJson(_json);
-                    //implement something
-                    //no it's ok
                     break;
                 default:
                     _logger.log(Level.SEVERE, "Command not supported");
@@ -171,7 +173,7 @@ public class Interpreter {
 
         try
         {
-            String query = String.format("//form[contains(@class,\"iapi\") and @id = %s]",iapiID);
+            String query = String.format("//form[contains(@class,\"h-iapi\") and @id = %s]",iapiID);
             _actualForm = (HtmlForm) _webPage.getByXPath(query).get(0);
             success = true;
 
@@ -328,7 +330,7 @@ public class Interpreter {
 
         assert parts.length > 1;
 
-        return parts[0];
+        return parts[0].replace("i-","");
 
     }
 
@@ -337,6 +339,40 @@ public class Interpreter {
         DomAttr result = (DomAttr) _actualForm.getByXPath(String.format(".//input[@id = \"%s\"]/@class",iapiID)).get(0);
         return  result.getNodeValue();
 
+    }
+    private String getResultLabel(String iapiID){
+        DomAttr result = (DomAttr) _webPage.getByXPath(String.format(".//div[@id = \"%s\"]/@class",iapiID)).get(0);
+
+        String[] unparsedLabels = result.getNodeValue().split(" ");
+        String label = null;
+
+        for(String htmlClass : unparsedLabels){
+            if(htmlClass.contains("i-result:"))
+                label = htmlClass;
+        }
+
+        return label.split(":")[1];
+
+    }
+    private String retrieveParameterFromResult(String retrieveCommand){
+        String[] parts = retrieveCommand.split(" ");
+
+        assert parts.length > 1;
+
+        String label =  parts[1].replace(")","");
+
+        for(Result res:_json.get_results())
+        {
+            if(res.getLabel().equals(label))
+                return res.getResult();
+        }
+
+        _logger.log(Level.SEVERE, String.format("Json result for label %s was not found!",label));
+        return null;
+    }
+
+    public void setLogger(Logger logger){
+        _logger = logger;
     }
     public boolean is_creationFailed() {
         return _creationFailed;

@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="iapi result" id="${sessionScope.id}">
+<div class="i-result:lastResult" id="${sessionScope.id}">
     <c:out value="${sessionScope.result}" />
 </div>
 

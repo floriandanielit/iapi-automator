@@ -1,6 +1,7 @@
 package Servlets;
 
 import iAPIEngine.Interpreter;
+import iAPIEngine.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,6 @@ public class CompilerServlet extends HttpServlet {
         String del =  (String) request.getParameter("delimiter");
         Interpreter interpreter;
         String result = "";
-        logger.log(Level.SEVERE, "Starting");
 
         if(del.equals(""))
             interpreter = new Interpreter(text);
@@ -34,6 +34,7 @@ public class CompilerServlet extends HttpServlet {
         {
             try
             {
+                interpreter.setLogger(logger);
                 result = interpreter.compile();
             }
             catch (Exception ex)

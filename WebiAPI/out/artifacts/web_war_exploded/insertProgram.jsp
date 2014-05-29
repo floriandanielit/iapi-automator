@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <form id="formCompiler" name="compiler" action="Compile" method="post">
+    <form id="formCompiler" name="compiler" class="e-form:formCompiler" action="Compile" method="post">
         <input type="text" name="program" id="programContainer" />
         <input type="text" name="delimiter" id="del" />
         <input type="submit" class="basic" name="btn" value="submit program" />

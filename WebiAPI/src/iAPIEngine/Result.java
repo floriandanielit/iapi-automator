@@ -7,6 +7,7 @@ public class Result {
     private String page;
     private String result;
     private String iAPIid;
+    private String label;
 
     public String getPage() {
         return page;
@@ -30,5 +31,13 @@ public class Result {
 
     public void setiAPIid(String iAPIid) {
         this.iAPIid = iAPIid;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
