@@ -19,15 +19,12 @@ public class CompilerServlet extends HttpServlet {
         Logger logger= Logger.getLogger(getClass().getName());
 
         String text = (String) request.getParameter("program");
-        String del =  (String) request.getParameter("delimiter");
+        System.out.println(text);
+        //String del =  (String) request.getParameter("delimiter");
         Interpreter interpreter;
         String result = "";
-
-        if(del.equals(""))
-            interpreter = new Interpreter(text);
-        else
-            interpreter = new Interpreter(text,del);
-
+        interpreter = new Interpreter(text);
+        logger.log(Level.SEVERE, "post working");
         if(interpreter.is_creationFailed())
             System.out.println("Failed to compile program");
         else
@@ -50,6 +47,8 @@ public class CompilerServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        Logger logger= Logger.getLogger(getClass().getName());
+        logger.log(Level.SEVERE, "get passed");
+        doPost(request, response);
     }
 }

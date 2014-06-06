@@ -64,25 +64,6 @@ public class Interpreter {
         }
 
     }
-    public Interpreter(String program, String del){
-        _commands = null;
-        try
-        {
-            _commands = Validator.validateSource(program, del);
-            set_creationFailed(false);
-            _json = new ResultJSON();
-            _resultJson = new Gson();
-            _supportedInputs = new ArrayList<String>(Arrays.asList("text:","password:","reset:","image:","file:","checkbox:","radiobutton:","button:","image:","hidden:","submit"));
-
-        }
-        catch (ValidationException ex)
-        {
-            _logger.log(Level.SEVERE, "Invalid source, check syntax");
-
-            set_creationFailed(true);
-        }
-
-    }
     public String compile() throws ValidationException{
 
         String executionResult = "";

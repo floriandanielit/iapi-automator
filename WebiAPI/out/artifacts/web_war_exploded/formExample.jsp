@@ -12,6 +12,7 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="js/istruction.js"></script>
     <script src="js/recordingEngine.js"></script>
+    <script src="js/prototype.js"></script>
 </head>
 <body>
 <script type="text/javascript">
