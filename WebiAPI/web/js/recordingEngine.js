@@ -15,14 +15,14 @@ function startRecorder() {
 
     localStorage.setItem("isRecording", "yes");
 
-    $("#iapistoprecoridng").removeAttr("disabled");
-    $("#iapistartrecoridng").attr("disabled","disabled");
+    $("#iapistoprecording").removeAttr("disabled");
+    $("#iapistartrecording").attr("disabled","disabled");
 
     //this fixes multiple open in the language
     if(localStorage.getItem("program") == null)
         instructions.push(new Istruction("open", document.baseURI));
 
-    $("form.iapi").each(function(index, item){
+    $("form.h-iapi").each(function(index, item){
         var  current = this;
         $(item).mouseenter(function(){
 
@@ -36,7 +36,7 @@ function startRecorder() {
     });
 
 
-    $("div.iapi.result").each(function(index, item){
+    $("div[class*=i-result]").each(function(index, item){
         var  current = this;
         $(item).mouseenter(function(){
             if(divs[current.id] == undefined){
@@ -49,7 +49,7 @@ function startRecorder() {
     });
 
 
-    $items = $("form.iapi").children();
+    $items = $("form.h-iapi").children();
 
 
     $items.each(function(index, item){
@@ -88,26 +88,30 @@ function startRecorder() {
         actualIstruction = new Istruction("fill",sanitizeInput(item.value) );
         //actualIstruction.parametersList.push(sanitizeInput(item.value));
         actualIstruction.parametersList.push(sanitizeInput(item.id));
+        $("#iapisidebar").append("<input type=\"checkbox\" id=\""+instructions.length+"\"/>  "+actualIstruction.action+" "+actualIstruction.parametersList[0]+" "+actualIstruction.parametersList[1]+'<br />')
         instructions.push(actualIstruction);
 
+
     }
-    function getIAPIclass(inputClass){
-
-        var classes = inputClass.split(" ");
-
-        for(var i=0; i< classes.length; i++){
-
-            if(classes[i].indexOf("inputType:") > -1)
-                return classes[i];
-        }
-        return "";
-    }
-
-
 
 };
+function addDynamicFields(){
+    var toChange = $("#iapisidebar input:checkbox");
+
+    toChange.each(function(index, item){
+        console.log(item.id)
+        if(item.checked){
+            var index = instructions[item.id].parametersList.length;
+            instructions[item.id].parametersList[0] = "$dynamic";
+        }
+
+    });
+
+}
 function doBeforeUnload(){
 
+
+    addDynamicFields();
     var text = "";
 
     for(var i=0;i < instructions.length;i++){
@@ -135,14 +139,14 @@ function doBeforeUnload(){
 function stopRecording(){
     doBeforeUnload();
     localStorage.setItem("isRecording", "no");
-    $("#iapistartrecoridng").removeAttr("disabled");
-    $("#iapistoprecoridng").attr("disabled","disabled");
+    $("#iapistartrecording").removeAttr("disabled");
+    $("#iapistoprecording").attr("disabled","disabled");
 
     //do unbind of all elements
     console.log("Doing unbind");
-    $("form.iapi").unbind("mouseenter");
+    $("form.h-iapi").unbind("mouseenter");
     $("div.iapi.result").unbind("mouseenter");
-    $("form.iapi").children().unbind("click focusin focusout");
+    $("form.h-iapi").children().unbind("click focusin focusout");
 
     var text = localStorage.getItem("program");
 
@@ -157,17 +161,17 @@ $(document).ready(function(){
     function initSidebar(){
 
         $("body").append("<div id=\"iapisidebar\" style=\"border-width: 1px;border-color: red;border-style: solid;width: 220px;height: 225px;top: 100px;right: 40px;padding: 10px;position: fixed; \"> \
-            <button id=\"iapistartrecoridng\" onclick='startRecorder();'>Start</button><br /> \
-                <button id=\"iapistoprecoridng\" onclick='stopRecording();'>Stop</button> \
-                <p id=\"iapirecordingstatus\"></p> \
+            <button id=\"iapistartrecording\" onclick='startRecorder();'>Start</button><br /> \
+                <button id=\"iapistoprecording\" onclick='stopRecording();'>Stop</button> \
+                <p id=\"iapirecordingstatus\"> Possible dynamic fields list</p> \
             </div>");
 
         var status = localStorage.getItem("isRecording");
         if(status == undefined || status == "no" || status == null){
-            $("#iapistoprecoridng").attr("disabled","disabled");
+            $("#iapistoprecording").attr("disabled","disabled");
         }
         else{
-            $("#iapistartrecoridng").attr("disabled","disabled");
+            $("#iapistartrecording").attr("disabled","disabled");
             startRecorder();
         }
 
