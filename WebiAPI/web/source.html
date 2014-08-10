@@ -1,0 +1,139 @@
+﻿
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .datacolor {
+                color: red;
+            }
+            .datacolor2 {
+                 color: blue;
+            }
+            .dataitem {
+                 color: yellow;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+    	<h1>Page with reusable data</h1>
+    	<h2>A table with publications</h2>
+
+            <table class="iapi data:Publications" id="1" style="background-color: gray;" cellspacing="1" cellpadding="3">
+                <tr style="font-weight: bold; background-color: white;">
+                    <td class="dataitem">Author</td>
+                    <td class="dataitem">Title</td> 
+                    <td class="dataitem">Conference</td>
+                    <td class="dataitem">Href</td>
+                    <td class="dataitem">Abstract</td>
+                </tr>
+                <tr class="dataitem:Publication" style="background-color: white;">
+                    <td class="dataattribute:Author">IAPI SRC PAGE</td>
+                    <td class="dataattribute:Title">The Interactive API (iAPI)</td> 
+                    <td class="dataattribute:Conference">Proceedings of ComposableWeb 2013</td>
+                    <td class="dataattribute:Href">HREF</td>
+                    <td class="dataattribute:Abstract">ABSTRACT</td>
+                </tr>
+                <tr class="dataitem:Publication" style="background-color: white;">
+                    <td class="dataattribute:Author">J. Jara, F. Daniel, F. Casati and M. Marchese</td>
+                    <td class="dataattribute:Title">From a Simple Flow to Social Applications</td> 
+                    <td class="dataattribute:Conference">Proceedings of ComposableWeb 2013</td>
+                    <td class="dataattribute:Href">Proceedings of ComposableWeb 2013</td>
+                    <td class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</td>
+                </tr>
+         
+                
+            </table>
+
+<Div class="iapi data:Publications" id="2" style="background-color: gray;">
+              
+                <li class="dataitem:Publication" >
+                    <span class="dataattribute:Author">IAPI SRC PAGE</span>
+                    <span class="dataattribute:Title">The Interactive API (iAPI)</span> 
+                    <span class="dataattribute:Conference">Proceedings of ComposableWeb 2013</span>
+                    <span class="dataattribute:Href">HREF</span>
+                    <span class="dataattribute:Abstract">ABSTRACT</span>
+                </li>
+                <li class="dataitem:Publication" >
+                    <span class="dataattribute:Author">F. Daniel, P. Dolog and Q. Li (Eds.)</span>
+                    <span class="dataattribute:Title">Web Engineering</span> 
+                    <span class="dataattribute:Conference">Springer, June 2013</span>
+                    <span class="dataattribute:Href">Proceedings of ComposableWeb 2013</span>
+                    <span class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</span>
+                </li>
+            </Div>    
+                
+        <table class="iapi data:Publications" id="3" style="background-color: gray;" cellspacing="1" cellpadding="3">
+            <tr style="font-weight: bold; background-color: white;">
+                <td class="dataitem">Author</td>
+                <td class="dataitem">Title</td>
+                <td class="dataitem">Conference</td>
+                <td class="dataitem">Href</td>
+                <td class="dataitem">Abstract</td>
+            </tr>
+            <tr class="dataitem:Publication" style="background-color: white;">
+                <td class="dataattribute:Author">TWO</td>
+                <td class="dataattribute:Title">TWO</td>
+                <td class="dataattribute:Conference">TWO</td>
+                <td class="dataattribute:Href">TWO</td>
+                <td class="dataattribute:Abstract">TWO</td>
+            </tr>
+            <tr class="dataitem:Publication" style="background-color: white;">
+                <td class="dataattribute:Author">J. Jara, F. Daniel, F. Casati and M. Marchese</td>
+                <td class="dataattribute:Title">From a Simple Flow to Social Applications</td>
+                <td class="dataattribute:Conference">Proceedings of ComposableWeb 2013</td>
+                <td class="dataattribute:Href">Proceedings of ComposableWeb 2013</td>
+                <td class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</td>
+            </tr>
+            <tr class="dataitem:Publication" style="background-color: white;">
+                <td class="dataattribute:Author">A. Bouguettaya, Q. Z. Sheng and F. Daniel (Eds.)</td>
+                <td class="dataattribute:Title">Web Services Foundations</td>
+                <td class="dataattribute:Conference">Springer, July 2013</td>
+                <td class="dataattribute:Href">Proceedings of ComposableWeb 2013</td>
+                <td class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</td>
+            </tr>
+            <tr class="dataitem:Publication" style="background-color: white;">
+                <td class="dataattribute:Author">A. Bouguettaya, Q. Z. Sheng and F. Daniel (Eds.)</td>
+                <td class="dataattribute:Title">Advanced Web Services</td>
+                <td class="dataattribute:Conference">Springer, July 2013</td>
+                <td class="dataattribute:Href">Proceedings of ComposableWeb 2013</td>
+                <td class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</td>
+            </tr>
+            <tr class="dataitem:Publication" style="background-color: white;">
+                <td class="dataattribute:Author">F. Daniel, P. Dolog and Q. Li (Eds.)</td>
+                <td class="dataattribute:Title">Web Engineering</td>
+                <td class="dataattribute:Conference">Springer, June 2013</td>
+                <td class="dataattribute:Href">Proceedings of ComposableWeb 2013</td>
+                <td class="dataattribute:Abstract">Proceedings of ComposableWeb 2013</td>
+            </tr>
+        </table>
+
+ <div class="json:http://www.floriandaniel.it/ops/publications.php
+               iapi
+               dataitem:Publication
+               dataattribute:Author:author
+               dataattribute:Title:title
+               dataattribute:Conference:where"
+           id="4"
+           style="background-color: gray;"
+           cellspacing="1"
+           cellpadding="3">
+        <ol>
+            <li>TEST SOURCE LIKE FLORIAN SITE</li>
+        </ol>
+    </div>
+
+     
+            
+            
+    </body>
+</html>
+

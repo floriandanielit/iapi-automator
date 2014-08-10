@@ -10,11 +10,13 @@ jQuery(function ($) {
 });
 
 function modalClose(dialog){
+    //Finally after the user closed the dialog all the values inserted into the popup will replace their old $dynamic value
+
 
     var newInputs = $("#basic-modal-content input:text");
     var inputIndex = 0;
     var text = $("#programContainer").val();
-    var del = $("#del").val();
+    var del = ";";
 
     var elements = text.split(del);
     var pattern =/\$(\w+)/g;
@@ -23,6 +25,7 @@ function modalClose(dialog){
     elements.forEach(function(entry){
         if(entry.indexOf("$dynamic") > -1 && inputIndex < newInputs.length){
             entry = entry.replace(pattern,newInputs[inputIndex].value);
+            console.log(entry)
             inputIndex++;
         }
         if(entry != " ")
@@ -33,8 +36,11 @@ function modalClose(dialog){
     $("#formCompiler").submit();
 }
 function precompileScript(dialog){
+    //This function resolves all the dynamic fields before the compilation by the web service
+    //All instructions are scanned and then resolved via a popup where the user will complete each field
+
     var text = $("#programContainer").val();
-    var del = $("#del").val();
+    var del = ";";
 
     var elements = text.split(del);
     //var re = new RegExp("~(\\w+)", "g");

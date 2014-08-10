@@ -80,7 +80,7 @@ function startRecorder() {
        // actualIstruction = new Istruction("fill", sanitizeInput(getIAPIclass($(item).attr('class'))));
     }
     function handleMouseLeave(item){
-
+        init();
         //if(confirm("Do you want this field to be dynamic?")){
           //  actualIstruction.parametersList.push("$dynamic$");
         //}
@@ -88,7 +88,10 @@ function startRecorder() {
         actualIstruction = new Istruction("fill",sanitizeInput(item.value) );
         //actualIstruction.parametersList.push(sanitizeInput(item.value));
         actualIstruction.parametersList.push(sanitizeInput(item.id));
-        $("#iapisidebar").append("<input type=\"checkbox\" id=\""+instructions.length+"\"/>  "+actualIstruction.action+" "+actualIstruction.parametersList[0]+" "+actualIstruction.parametersList[1]+'<br />')
+
+        //linker.js needed
+
+        $("#iapisidebar").append("<input type=\"checkbox\" id=\""+instructions.length+"\"/>  "+"<a href='#' class='basic'>"+actualIstruction.action+" "+actualIstruction.parametersList[0]+" "+actualIstruction.parametersList[1]+"</a>"+'<br />')
         instructions.push(actualIstruction);
 
 
@@ -124,7 +127,7 @@ function doBeforeUnload(){
         text+=";";
     }
 
-    alert("This is the final text of this page "+text);
+    //alert("This is the final text of this page "+text);
 
     var allProgram = localStorage.getItem("program");
 
@@ -160,10 +163,10 @@ $(document).ready(function(){
 
     function initSidebar(){
 
-        $("body").append("<div id=\"iapisidebar\" style=\"border-width: 1px;border-color: red;border-style: solid;width: 220px;height: 225px;top: 100px;right: 40px;padding: 10px;position: fixed; \"> \
-            <button id=\"iapistartrecording\" onclick='startRecorder();'>Start</button><br /> \
-                <button id=\"iapistoprecording\" onclick='stopRecording();'>Stop</button> \
-                <p id=\"iapirecordingstatus\"> Possible dynamic fields list</p> \
+        $(".container").append("<div id=\"iapisidebar\" style=\"border-width: 1px;border-color: red;border-style: solid;width: 220px;height: 225px;top: 100px;right: 40px;padding: 10px;position: fixed; \"> \
+            <button id=\"iapistartrecording\" type=\"button\" class=\"btn btn-default\" onclick='startRecorder();'>Start</button><br /> \
+                <button id=\"iapistoprecording\" type=\"button\" class=\"btn btn-default\" onclick='stopRecording();'>Stop</button> \
+                <p id=\"iapirecordingstatus\"> Click to link a result</p> \
             </div>");
 
         var status = localStorage.getItem("isRecording");

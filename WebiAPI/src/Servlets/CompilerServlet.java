@@ -1,6 +1,8 @@
 package Servlets;
 
 import iAPIEngine.Interpreter;
+import iAPIEngine.Result;
+import iAPIEngine.ResultJSON;
 import iAPIEngine.Validator;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.google.gson.Gson;
+
 
 /**
  * Created by les on 15/04/14.
@@ -39,10 +43,11 @@ public class CompilerServlet extends HttpServlet {
                 logger.log(Level.SEVERE, ex.getMessage());
             }
         }
+        Gson gson = new Gson();
+        ResultJSON json = gson.fromJson(result, ResultJSON.class);
+        request.getSession().setAttribute("results",json.get_results());
 
-        request.getSession().setAttribute("result",result);
-
-        response.sendRedirect("test.jsp");
+        response.sendRedirect("risultati.jsp");
 
     }
 

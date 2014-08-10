@@ -14,7 +14,7 @@ function modalClose(dialog){
     var newInputs = $("#basic-modal-content input:text");
     var inputIndex = 0;
     var text = $("#programContainer").val();
-    var del = $("#del").val();
+    var del = ";";
 
     var elements = text.split(del);
     var pattern =/\$(\w+)/g;
@@ -23,6 +23,7 @@ function modalClose(dialog){
     elements.forEach(function(entry){
         if(entry.indexOf("$dynamic") > -1 && inputIndex < newInputs.length){
             entry = entry.replace(pattern,newInputs[inputIndex].value);
+            console.log(entry)
             inputIndex++;
         }
         if(entry != " ")
@@ -34,7 +35,7 @@ function modalClose(dialog){
 }
 function precompileScript(dialog){
     var text = $("#programContainer").val();
-    var del = $("#del").val();
+    var del = ";";
 
     var elements = text.split(del);
     //var re = new RegExp("~(\\w+)", "g");

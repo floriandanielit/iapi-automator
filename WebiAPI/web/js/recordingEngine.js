@@ -9,12 +9,15 @@ var isProgramEmpty;
 
 
 function sanitizeInput(input){
+    //insert ~ before the input parameter
     return '~'+input;
 }
 function startRecorder() {
 
+    //always flag the recording status to true/yes
     localStorage.setItem("isRecording", "yes");
 
+    //enables stop button and viceversa with the start one
     $("#iapistoprecording").removeAttr("disabled");
     $("#iapistartrecording").attr("disabled","disabled");
 
@@ -22,6 +25,7 @@ function startRecorder() {
     if(localStorage.getItem("program") == null)
         instructions.push(new Istruction("open", document.baseURI));
 
+    //add a listener on each iapi form to the event mouseenter
     $("form.h-iapi").each(function(index, item){
         var  current = this;
         $(item).mouseenter(function(){
@@ -35,7 +39,7 @@ function startRecorder() {
         });
     });
 
-
+    //add a listener to all the divs with the tag i-result in the class section
     $("div[class*=i-result]").each(function(index, item){
         var  current = this;
         $(item).mouseenter(function(){
@@ -51,7 +55,7 @@ function startRecorder() {
 
     $items = $("form.h-iapi").children();
 
-
+    //handles the input of the selected form elements
     $items.each(function(index, item){
         var current = this;
         if(item.type == "submit"){
@@ -70,25 +74,24 @@ function startRecorder() {
         }
     });
     function handleSubmit(item){
-
+        //function that handles the submit action: simply adds the submit instruction to the list with the item's id
         actualIstruction = new Istruction("submit",item.id);
         instructions.push(actualIstruction);
         doBeforeUnload();
     }
     function handleMouseEnter(item){
-
+       // !--deprecated--!
        // actualIstruction = new Istruction("fill", sanitizeInput(getIAPIclass($(item).attr('class'))));
     }
     function handleMouseLeave(item){
-
-        //if(confirm("Do you want this field to be dynamic?")){
-          //  actualIstruction.parametersList.push("$dynamic$");
-        //}
-        //else
+        init(); // see linker.js
+        //adds the fill instruction with the inserted values into the list
         actualIstruction = new Istruction("fill",sanitizeInput(item.value) );
         //actualIstruction.parametersList.push(sanitizeInput(item.value));
         actualIstruction.parametersList.push(sanitizeInput(item.id));
-        $("#iapisidebar").append("<input type=\"checkbox\" id=\""+instructions.length+"\"/>  "+actualIstruction.action+" "+actualIstruction.parametersList[0]+" "+actualIstruction.parametersList[1]+'<br />')
+
+        //insert the new instruction to the left-side box
+        $("#iapisidebar").append("<input type=\"checkbox\" id=\""+instructions.length+"\"/>  "+"<a href='#' class='basic'>"+actualIstruction.action+" "+actualIstruction.parametersList[0]+" "+actualIstruction.parametersList[1]+"</a>"+'<br />')
         instructions.push(actualIstruction);
 
 
@@ -96,6 +99,7 @@ function startRecorder() {
 
 };
 function addDynamicFields(){
+    //select all the values checked in the box and replace their value with $dynamic
     var toChange = $("#iapisidebar input:checkbox");
 
     toChange.each(function(index, item){
@@ -110,7 +114,8 @@ function addDynamicFields(){
 }
 function doBeforeUnload(){
 
-
+    //This is the final section, called only when the recording is stopped or a submit button is pushed
+    //All the checked fields are set to dynamic and next the instructions are saved into the local storage
     addDynamicFields();
     var text = "";
 
@@ -124,7 +129,7 @@ function doBeforeUnload(){
         text+=";";
     }
 
-    alert("This is the final text of this page "+text);
+    //alert("This is the final text of this page "+text);
 
     var allProgram = localStorage.getItem("program");
 
@@ -137,6 +142,8 @@ function doBeforeUnload(){
 };
 
 function stopRecording(){
+    //This part is only needed to close the recording.
+
     doBeforeUnload();
     localStorage.setItem("isRecording", "no");
     $("#iapistartrecording").removeAttr("disabled");
@@ -160,10 +167,10 @@ $(document).ready(function(){
 
     function initSidebar(){
 
-        $("body").append("<div id=\"iapisidebar\" style=\"border-width: 1px;border-color: red;border-style: solid;width: 220px;height: 225px;top: 100px;right: 40px;padding: 10px;position: fixed; \"> \
-            <button id=\"iapistartrecording\" onclick='startRecorder();'>Start</button><br /> \
-                <button id=\"iapistoprecording\" onclick='stopRecording();'>Stop</button> \
-                <p id=\"iapirecordingstatus\"> Possible dynamic fields list</p> \
+        $(".container").append("<div id=\"iapisidebar\" style=\"border-width: 1px;border-color: red;border-style: solid;width: 220px;height: 225px;top: 100px;right: 40px;padding: 10px;position: fixed; \"> \
+            <button id=\"iapistartrecording\" type=\"button\" class=\"btn btn-default\" onclick='startRecorder();'>Start</button><br /> \
+                <button id=\"iapistoprecording\" type=\"button\" class=\"btn btn-default\" onclick='stopRecording();'>Stop</button> \
+                <p id=\"iapirecordingstatus\"> Click to link a result</p> \
             </div>");
 
         var status = localStorage.getItem("isRecording");

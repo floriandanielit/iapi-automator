@@ -16,11 +16,11 @@ public class LoginServlet extends HttpServlet {
         String password =(String) request.getParameter("password");
 
         if(username.equals("mirko") && password.equals("morandi"))
-            request.getSession().setAttribute("result","success");
+            request.getSession().setAttribute("result","login eseguito con successo");
         else
-            request.getSession().setAttribute("result","fail");
+            request.getSession().setAttribute("result","login fallito");
         request.getSession().setAttribute("id","1");
-        response.sendRedirect("result.jsp");
+        response.sendRedirect("form2.jsp");
 
 
     }

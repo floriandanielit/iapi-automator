@@ -64,6 +64,12 @@ public class Interpreter {
         }
 
     }
+
+    /***
+     * This is the main function of the engine where all instructions are interpreted. For each instruction
+     * @return
+     * @throws ValidationException
+     */
     public String compile() throws ValidationException{
 
         String executionResult = "";

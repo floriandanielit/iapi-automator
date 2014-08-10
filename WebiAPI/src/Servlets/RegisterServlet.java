@@ -21,7 +21,7 @@ public class RegisterServlet extends HttpServlet {
 
         request.getSession().setAttribute("id","1");
         request.getSession().setAttribute("result",String.format("%s %s %s",name,home,state));
-        response.sendRedirect("printLastResult.jsp");
+        response.sendRedirect("ultimorisultato.jsp");
 
 
     }
